@@ -400,6 +400,8 @@ print(df)
 **[⬆ Back to Top](#table-of-contents)**
 
 ### Scenerio-7
+#### (Select, for each year, the sale(s) with the highest quantity (include ties when multiple sales share the same maximum quantity in that year).
+#### Return only those top rows and order the final output by year in descending.)
 #### Input :- 
 ```
 +-------+----------+----+--------+-----+
