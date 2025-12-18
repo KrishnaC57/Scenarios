@@ -147,34 +147,6 @@ FROM  (SELECT *,
        FROM   timetab)
 WHERE  newvalues != 0
 ```
-Pandas - 
-```
-import pandas as pd
-
-data = [
-    (1111, "2021-01-15", 10),
-    (1111, "2021-01-16", 15),
-    (1111, "2021-01-17", 30),
-    (1112, "2021-01-15", 10),
-    (1112, "2021-01-15", 20),
-    (1112, "2021-01-15", 30),
-]
-
-df = pd.DataFrame(data, columns=["sensorid", "timestamp", "values"])
-print(df)
-
-df["newvalues"] = df.groupby("sensorid")["values"].shift(-1)
-print(df)
-
-df = df.dropna(subset=["newvalues"])
-print(df)
-
-df["values"] = df["newvalues"] - df["values"]
-print(df)
-
-df = df.drop(columns=["newvalues"])
-print(df)
-```
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -215,27 +187,6 @@ FROM   custtab
 GROUP  BY custid,
           custname
 ORDER  BY custid 
-```
-Pandas - 
-```
-data = [
-    (1, "Mark Ray", "AB"),
-    (2, "Peter Smith", "CD"),
-    (1, "Mark Ray", "EF"),
-    (2, "Peter Smith", "GH"),
-    (2, "Peter Smith", "CD"),
-    (3, "Kate", "IJ"),
-]
-
-df = pd.DataFrame(data, columns=["custid", "custname", "address"])
-print(df)
-
-finaldf = (
-    df.groupby(["custid", "custname"])["address"]
-    .apply(lambda x: list(set(x)))
-    .reset_index()
-)
-print(finaldf)
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
@@ -286,48 +237,6 @@ print(finaldf)
 #### Solution :- 
 Scala-Spark - [Click Here](<https://github.com/mohankrishna02/interview-scenerios-spark-sql/blob/master/src/pack/Scenerio5.scala>) <br>
 PySpark - [Click Here](<https://github.com/mohankrishna02/interview-scenerios-spark-sql/blob/master/Scenerio5.py>) <br>
-Pandas - 
-```
-import pandas as pd
-
-# Read data convert into dataframes(df1 and df2).
-data1 = [
-    (1, "abc", 31, "abc@gmail.com"),
-    (2, "def", 23, "defyahoo.com"),
-    (3, "xyz", 26, "xyz@gmail.com"),
-    (4, "qwe", 34, "qwegmail.com"),
-    (5, "iop", 24, "iop@gmail.com"),
-]
-
-df1 = pd.DataFrame(data1, columns=["id", "name", "age", "email"])
-print(df1)
-
-data2 = [
-    (11, "jkl", 22, "abc@gmail.com", 1000),
-    (12, "vbn", 33, "vbn@yahoo.com", 3000),
-    (13, "wer", 27, "wer", 2000),
-    (14, "zxc", 30, "zxc.com", 2000),
-    (15, "lkj", 29, "lkj@outlook.com", 2000),
-]
-
-df2 = pd.DataFrame(data2, columns=["id", "name", "age", "email", "salary"])
-print(df2)
-
-# Create a new dataframe df3 from df1, along with a new column salary, and keep it constant 1000
-df3 = df1.copy()
-df3["salary"] = 1000
-print(df3)
-
-# append df2 and df3, and form df4
-df4 = pd.concat([df2, df3])
-
-df4 = df4.sort_values("id")
-print(df4)
-
-# Remove records which have invalid email from df4, emails with @ are considered to be valid.
-finaldf = df4[df4["email"].str.contains("@", na=False)]
-print(finaldf)
-```
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -372,30 +281,7 @@ SELECT *,
     END AS Designation
 FROM emptab
 ```
-Pandas - 
-```
-import pandas as pd
 
-data = [
-    ("1", "a", 10000),
-    ("2", "b", 5000),
-    ("3", "c", 15000),
-    ("4", "d", 25000),
-    ("5", "e", 50000),
-    ("6", "f", 7000),
-]
-
-df = pd.DataFrame(data, columns=["empid", "name", "salary"])
-print(df)
-
-
-def emp_desgnination(salary):
-    return "Manager" if salary > 10000 else "Employee"
-
-
-df["Desgniation"] = df["salary"].apply(emp_desgnination)
-print(df)
-```
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -453,34 +339,7 @@ WHERE
 ORDER BY 
   sale_id
 ```
-Pandas - 
-```
-import pandas as pd
 
-data = [
-    (1, 100, 2010, 25, 5000),
-    (2, 100, 2011, 16, 5000),
-    (3, 100, 2012, 8, 5000),
-    (4, 200, 2010, 10, 9000),
-    (5, 200, 2011, 15, 9000),
-    (6, 200, 2012, 20, 7000),
-    (7, 300, 2010, 20, 7000),
-    (8, 300, 2011, 18, 7000),
-    (9, 300, 2012, 20, 7000),
-]
-
-df = pd.DataFrame(data, columns=["sale_id", "product_id", "year", "quantity", "price"])
-print(df)
-
-df["rank"] = df.groupby("year")["quantity"].rank(method="dense", ascending=False)
-print(df)
-
-df = df[df["rank"] == 1]
-print(df)
-
-df = df.drop("rank", axis=1).sort_values("sale_id")
-print(df)
-```
 
 **[⬆ Back to Top](#table-of-contents)**
 
